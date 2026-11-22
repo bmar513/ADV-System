@@ -1,0 +1,7 @@
+r1.2 compile corrections for PlatformIO:
+1. Forward-declared shared SD globals before Notes/FLASH helper functions.
+2. Replaced unavailable fs::File::truncate() with SD.open(path,"w") to truncate on save.
+3. Converted keyboard std::vector<char> to Arduino String character by character.
+4. Created PlatformIO src/main.cpp and moved local headers into src.
+
+This is a source-level correction only; not compiled or tested. DO NOT UPLOAD until custom bootloader and partition configuration are verified.

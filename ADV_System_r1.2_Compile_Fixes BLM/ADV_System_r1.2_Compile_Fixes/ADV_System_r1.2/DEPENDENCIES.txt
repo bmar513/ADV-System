@@ -1,0 +1,41 @@
+ADV SYSTEM r1.0 — PACKAGES AND LIBRARIES
+=========================================
+
+BOARD / IDE
+- Arduino IDE 2.x (exact version not recorded)
+- Board selection: M5Cardputer
+- ESP32 by Espressif Systems: 3.2.1 is the documented working Music v1.0 baseline.
+  The user has also reported compiling the ADV System series with ESP32 3.3.12;
+  the final r1.0 cleanup has not been verified against either version.
+- ESP32-S3 USB settings must support USB-OTG / TinyUSB for the SD app.
+  Board-menu wording varies with ESP32 core version.
+
+INSTALL VIA ARDUINO LIBRARY MANAGER
+- M5Cardputer (M5Stack): required; exact installed version not recorded.
+- ESP8266Audio (Earle F. Philhower): version 2.4.3 documented in the
+  working Music v1.0 baseline; consult AUDIOOUTPUTPDM_COMPATIBILITY_EDIT.txt.
+
+PROVIDED BY ESP32 BOARD PACKAGE / ARDUINO CORE
+- SPI.h, SD.h, Preferences.h, USB.h, USBMSC.h, tusb.h
+- FreeRTOS, esp_heap_caps, standard C++ libraries
+  Do not install a second standalone SD library to satisfy SD.h.
+
+INCLUDED IN THIS ZIP (NO SEPARATE INSTALL)
+- AudioOutputM5Speaker.h (project-local speaker output adapter)
+- SeqVoice.h (project-local sequencer voice type)
+
+ESP8266Audio HEADERS USED
+- AudioFileSourceSD.h
+- AudioGeneratorMP3.h
+- AudioGeneratorWAV.h
+- AudioOutput.h
+
+COMPATIBILITY NOTE
+The included AudioOutputPDM compatibility note documents a local one-line
+library workaround used with the earlier working setup. This is NOT an
+upstream fix, and should be applied only if the described compile error occurs.
+Changing library/core versions may change the need for that workaround.
+
+NOT VERIFIED
+Exact M5Cardputer library version and all USB board menu settings were not
+captured in the source. Do not treat the list as a reproducible lockfile.

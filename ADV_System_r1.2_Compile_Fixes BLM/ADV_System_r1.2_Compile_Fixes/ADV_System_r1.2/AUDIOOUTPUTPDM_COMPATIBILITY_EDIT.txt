@@ -1,0 +1,44 @@
+ESP8266Audio 2.4.3 — REQUIRED COMPATIBILITY EDIT
+================================================
+
+Known-working development setup (tested by user):
+- Arduino ESP32 boards by Espressif Systems: 3.2.1
+- ESP8266Audio: 2.4.3
+- Cardputer ADV Music firmware: v1.0 (snapshot of working v0.14i)
+
+Reason:
+The unmodified ESP8266Audio 2.4.3 library fails to compile with ESP32
+3.2.1 because its PDM output code refers to a struct member and constant
+not present in that ESP32 core:
+  i2s_pdm_tx_slot_config_t::data_fmt
+  I2S_PDM_DATA_FMT_PCM
+
+EDIT STEPS (Windows):
+1. Install ESP32 boards package version 3.2.1 through Arduino Boards Manager.
+2. Install ESP8266Audio version 2.4.3 through Arduino Library Manager.
+3. CLOSE Arduino IDE.
+4. Open your sketchbook libraries folder:
+   C:\Users\blmartin\OneDrive - Winston Industries, Inc\Desktop\Arduino\libraries\ESP8266Audio\src\
+   (If your sketchbook location changes, find ESP8266Audio/src there.)
+5. Back up AudioOutputPDM.cpp, then open the original in a text editor.
+6. Find this line (approximately line 77 in ESP8266Audio 2.4.3):
+       pdm_cfg.slot_cfg.data_fmt = I2S_PDM_DATA_FMT_PCM;
+7. Add // at the start:
+       // pdm_cfg.slot_cfg.data_fmt = I2S_PDM_DATA_FMT_PCM;
+8. Save the file. Reopen Arduino IDE and compile/upload the included .ino.
+
+The Cardputer project does NOT use AudioOutputPDM for its speaker.
+This workaround disables one PDM output configuration statement globally
+for projects using this installed library. It is not a general upstream fix.
+
+TO RESTORE STOCK:
+- Remove the two slashes from that line, OR reinstall ESP8266Audio 2.4.3.
+- The stock 2.4.3 library will again fail compilation with ESP32 3.2.1
+  unless a future compatibility fix is installed.
+
+IMPORTANT:
+- ESP32 3.3.12 previously produced silent ADV microphone captures
+  (constant -8 samples). Do not upgrade it assuming the microphone works.
+- ESP8266Audio 2.3.0 exhibited the same PDM compile failure.
+- ESP8266Audio 2.2.0 was proposed but NOT verified with this complete firmware.
+- If changing ESP32 core or ESP8266Audio versions, retest MP3, WAV, and mic.

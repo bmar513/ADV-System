@@ -1,0 +1,15 @@
+ADV SYSTEM r1.2 — INTEGRATION KIT (SOURCE ONLY)
+
+STATUS: NOT COMPILED. NOT FLASHABLE. DO NOT INSTALL THE BOOTLOADER YET.
+
+Included: ADV System Arduino sketch, local headers, custom partition table, bootloader hook source, bootloader build script.
+
+A complete build needs: (1) application compiled for factory partition 0x10000, max 0x160000 bytes; (2) custom ESP32-S3 bootloader compiled with hook; (3) matching partition-table binary; (4) a verified combined flashing procedure.
+
+The provided platformio.ini was not a working application build definition: the source was a .ino in the package root, whereas PlatformIO expects src/main.cpp or a compatible source layout. It is retained as platformio.ini.UNVALIDATED for reference, not as an installation method.
+
+The Arduino IDE Upload command alone is NOT sufficient: it can replace the custom bootloader/partition table.
+
+Firmware launcher is beta source and has not been validated on hardware. Third-party firmware can overwrite raw flash, so 'protected' is a software convention, not hardware-enforced protection.
+
+Your currently working ADV firmware should be retained until a matched image is built and tested.
